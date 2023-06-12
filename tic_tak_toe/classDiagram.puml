@@ -1,0 +1,181 @@
+@startuml tic_tak_toe
+
+'  creating class
+class Score
+{
+    -Score:int
+    +Score():void
+    +incrementScore():void
+    -decremetnScore():void
+}
+class Move
+{
+    -moveCount:int
+    +Move(int):void
+    +getMoveCoutn():int
+    +incrementMove():void
+    +decremetnMove():void
+    +setMoveCount(int):void
+    
+
+}
+class Symbol{
+    -symbol:enum SymbolType
+    +Symbol(enum ):void
+    +setSymbol(enum SymbolType):void
+    +getSymbol():enum SymbolType
+}
+class Player{
+    -playerName:string
+    -PlayerId : int
+    -playerScore: Score
+    -playerMoves: Move
+    -playerSymbol: Symbol
+
+    +incrementMove();
+    +Player(string, int id,int score, int move coutn,enum symbol):void
+    +getPlayerNmae(): string
+    +getPlayerId(): int
+    +makeMove():int
+    +incrementScore():int
+    +getPlayerSymbol():enum SymbolType
+    +getScore():int
+}
+class Cell
+{
+    -cellId: int
+    -cellSymbol: Symbol
+    +Cell(int id):cellId
+    +setSymnol(enum SymbolType):void
+    +getSymbol():enum SymbolType
+}
+class Board
+{
+    -markedCount:int
+    -size:int
+    -board:vector<vector<cell>>
+
+    +Board(size):void
+    +getSize():int
+    +markCell(int id):bool
+
+}
+class Round
+{
+    -rounds:int
+    +Round(int):void
+    +getRound():int
+}
+class Chance
+{
+    
+    -chance:Queue
+    +chance(int):void
+    +shiftChance():void
+    +getChance():void
+}
+class Rank
+{
+    -Rank:vector<Player&>
+    +updateRank():void
+    +getRank():vector<Player&>
+}
+class Refree
+{
+    +validateMove(int cellId,Board &board ):bool
+    +checkFull(Board&  ):bool
+    +someOneWon(Board&):int
+    +changeChance(Chance&):void
+
+    
+}
+class SymbolOption
+{
+    -option:hashMap<char,int>
+
+    +symbolOption(int playerCount)
+    +symbolAvailable(char ):bool
+    +makeUnAvailable(char):void
+
+}
+class GameSetting
+{
+    -playerCount:int
+    -movePerPlayer: int 
+    -boardSize : int
+    +GameSetting(InputOutput& io)
+    +getPlayerCount():int
+    +getMovePerPlayer:int
+    +getBoardSize:int
+}
+
+class Game
+{
+    -refree:Refree
+    -symbolOption:SymbolOption
+    -playerManager:PlayerManager
+    -board :Board
+    -rounds:Round
+    -chance:Chance
+    -PlayersRank:Rank
+
+    +Game():void
+    +endGame():void
+    +startGame():void
+}
+Class GameOver
+{
+    +GameOver(InputOutput& , Rank& ,PlayerManager&)
+}
+class PlayerManager
+{
+    -playerCount: int
+    -players:vector<Playre>
+    
+    +PlayerManager(int, InputOutput& , SymbolOption&):void
+    +playerWithPlayerId(int):&Player
+    +makeMove(int id):int gridId 
+    +increaseScore(int id):void
+}
+class GameStart
+{
+    +GameStart()
+}
+class InputOutput
+{
+   -board:&Board
+   +Drawn Board :void
+   +OutputText(strign):void
+   +inputString():string
+   +inputInt():int
+
+}
+
+
+'making realationship
+'player
+Player -- Symbol
+Player -- Move
+Player -- Score
+InputOutput---Player  
+'player manager
+PlayerManager o--- Player
+
+'Cell
+Cell - Symbol
+'Board
+Board -- Cell
+'Game
+Game -- Chance
+Refree - Game 
+InputOutput --Game
+Game - PlayerManager
+Game --- Round
+Game --- Board
+Game -- Rank
+SymbolOption --Game
+GameSetting -- Game
+GameOver ---Game
+GameStart ---Game
+
+@enduml
